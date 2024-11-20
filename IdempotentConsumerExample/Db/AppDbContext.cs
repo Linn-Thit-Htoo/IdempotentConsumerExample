@@ -1,6 +1,4 @@
-﻿global using Microsoft.EntityFrameworkCore;
-
-namespace IdempotentConsumerExample.Db;
+﻿namespace IdempotentConsumerExample.Db;
 
 public class AppDbContext : DbContext
 {
