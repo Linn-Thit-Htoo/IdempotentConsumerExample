@@ -1,5 +1,3 @@
-using IdempotentConsumerExample.Config;
-using IdempotentConsumerExample.Db;
 using IdempotentConsumerExample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
