@@ -8,3 +8,4 @@ global using IdempotentConsumerExample.Models;
 global using Newtonsoft.Json;
 global using RabbitMQ.Client;
 global using RabbitMQ.Client.Events;
+global using IdempotentConsumerExample.Services;

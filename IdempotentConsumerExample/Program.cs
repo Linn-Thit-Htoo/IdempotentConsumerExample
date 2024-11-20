@@ -1,5 +1,3 @@
-global using IdempotentConsumerExample.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder
