@@ -1,10 +1,10 @@
-﻿using System.Text;
-using IdempotentConsumerExample.Config;
-using IdempotentConsumerExample.Db;
-using IdempotentConsumerExample.Models;
-using Newtonsoft.Json;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
+﻿global using System.Text;
+global using IdempotentConsumerExample.Config;
+global using IdempotentConsumerExample.Db;
+global using IdempotentConsumerExample.Models;
+global using Newtonsoft.Json;
+global using RabbitMQ.Client;
+global using RabbitMQ.Client.Events;
 
 namespace IdempotentConsumerExample.Services;
 
