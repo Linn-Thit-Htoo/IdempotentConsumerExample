@@ -1,11 +1,11 @@
-﻿using IdempotentConsumerExample.Config;
+﻿using System.Text;
+using IdempotentConsumerExample.Config;
 using IdempotentConsumerExample.Db;
 using IdempotentConsumerExample.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Text;
 
 namespace IdempotentConsumerExample.Services;
 
@@ -22,13 +22,14 @@ public class RabbitMQService : BackgroundService
 
     public IConnection CreateChannel()
     {
-        ConnectionFactory connectionFactory = new()
-        {
-            HostName = _rabbitMqConfiguration.HostName,
-            UserName = _rabbitMqConfiguration.Username,
-            Password = _rabbitMqConfiguration.Password,
-            VirtualHost = "/"
-        };
+        ConnectionFactory connectionFactory =
+            new()
+            {
+                HostName = _rabbitMqConfiguration.HostName,
+                UserName = _rabbitMqConfiguration.Username,
+                Password = _rabbitMqConfiguration.Password,
+                VirtualHost = "/",
+            };
 
         connectionFactory.AutomaticRecoveryEnabled = true;
         connectionFactory.NetworkRecoveryInterval = TimeSpan.FromSeconds(5);
@@ -45,7 +46,12 @@ public class RabbitMQService : BackgroundService
         foreach (Queues item in _rabbitMqConfiguration.QueueList!)
         {
             channel.ExchangeDeclare(item.Exchange, "direct");
-            channel.QueueDeclare(queue: item.Queue, durable: true, exclusive: false, autoDelete: false);
+            channel.QueueDeclare(
+                queue: item.Queue,
+                durable: true,
+                exclusive: false,
+                autoDelete: false
+            );
             channel.QueueBind(item.Queue, item.Exchange, item.RoutingKey, null);
             channel.BasicQos(0, 1, false);
             var consumer = new AsyncEventingBasicConsumer(channel);
@@ -59,8 +65,9 @@ public class RabbitMQService : BackgroundService
                     var scope = _serviceScopeFactory.CreateScope();
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                    bool messageExist = await context.Tbl_Messages
-                    .AnyAsync(x => x.MessageId == requestModel.MessageId);
+                    bool messageExist = await context.Tbl_Messages.AnyAsync(x =>
+                        x.MessageId == requestModel.MessageId
+                    );
                     if (!messageExist)
                     {
                         // consume
@@ -69,7 +76,7 @@ public class RabbitMQService : BackgroundService
                         {
                             MessageId = requestModel.MessageId,
                             IsProcessed = true,
-                            ProcessedAt = DateTime.Now
+                            ProcessedAt = DateTime.Now,
                         };
                         await context.Tbl_Messages.AddAsync(message);
                         await context.SaveChangesAsync();
