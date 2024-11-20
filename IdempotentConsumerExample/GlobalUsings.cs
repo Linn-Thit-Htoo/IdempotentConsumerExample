@@ -1,3 +1,10 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
+global using System.Text;
+global using IdempotentConsumerExample.Config;
+global using IdempotentConsumerExample.Db;
+global using IdempotentConsumerExample.Models;
+global using Newtonsoft.Json;
+global using RabbitMQ.Client;
+global using RabbitMQ.Client.Events;
