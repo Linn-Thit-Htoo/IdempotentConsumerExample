@@ -1,7 +1,6 @@
 using IdempotentConsumerExample.Config;
 using IdempotentConsumerExample.Db;
 using IdempotentConsumerExample.Services;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
