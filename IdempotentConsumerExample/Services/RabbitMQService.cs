@@ -2,7 +2,6 @@
 using IdempotentConsumerExample.Config;
 using IdempotentConsumerExample.Db;
 using IdempotentConsumerExample.Models;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
